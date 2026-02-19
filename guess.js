@@ -4,7 +4,6 @@
 let randomNum = 0;         // the game's secret random number they have to guess
 let tries = 0;             // how many tries the user took to guess the random number
 let bestScore = Infinity;  // the least amount of tries the user took to guess correctly in their playthrough
-let color = ""              // the color the output text should be
 
 /**********************************************************************************************************************
 * Updates the best score if the number of tries it took to guess correctly is less than the current best score
@@ -43,71 +42,80 @@ const getRandomInt = (max = 100) => {
 const guessClick = () => {
     const guess = parseInt(document.querySelector("#number").value);// guess entered by user
     const guessInput = document.querySelector("#number");           // the user <input> element
-    let messageLabel = document.querySelector("#message");          // the output message <label>
-    let history = document.querySelector("#history");               // the history <span> element
-    let message = "";                                                         // final output msg 4 user guess
+    const messageLabel = document.querySelector("#message");        // the output message <label>
+    const history = document.querySelector("#history");             // the history <span> element
+    let message = "";                                                         // final output msg for user guess
+    let color = "black";                                                      // the color of the output text
+
+    /*******************************************************************************************************************
+     * Helper function that updates the interface when the Guess() button is clicked
+     *
+     * @returns {void}
+     ******************************************************************************************************************/
+    const render = () => {
+        messageLabel.textContent = message;
+        messageLabel.style.color = color;
+        guessInput.value = "";
+        guessInput.focus();
+    }
 
     /*
      * validate that the user entered a valid number that's in the appropriate value range
-     * if invalid, set the output message appropriately and the output message color to black
+     * if invalid, set an appropriate error message and render the final screen for their invalid guess
      */
     if (isNaN(guess)) {
         message = "Not a valid number. Please enter a valid number."
-        color = "black";
+        return render();
     } else if (guess < 1 || guess > 100) {
         message = "Invalid number. Enter a number between 1 and 100.";
-        color = "black";
+        return render();
     }
-    else{
-        // determine the user's distance from the random number
-        const distance = Math.abs(randomNum - guess);
-        tries ++;
 
-        // check whether the user guessed right or hold close their guess was. Perform logic accordingly
-        switch (true){
-            case (distance === 0):
-                const lastWord = (tries ===1) ? "try" : "tries";
-                message = `Fire! You guessed it in ${tries} ${lastWord}`;
-                color = "green";
-                updateBestScore();
-                break;
-            case (distance <= 5):
-                message = "Hot! (Within 5)";
-                color = "red";
-                break;
-            case (distance <= 10):
-                message = "Warmer. (within 10)";
-                color = "orangered";
-                break;
-            case (distance <= 20):
-                message = "Warm. (within 20)";
-                color = "orange";
-                break;
-            case (distance <= 30):
-                message = "Cold. (within 30)";
-                color = "lightblue";
-                break;
-            case (distance <= 40):
-                message = "Colder. (within 40)";
-                color = "blue";
-                break;
-            case (distance > 40):
-                message = "FREEZING. (Way off)";
-                color = "darkblue";
-                break;
-            default:
-                message = "An unknown error occurred.";
-        }//end switch
+    // calculate the user's distance from the random number and increment their tries count
+    const distance = Math.abs(randomNum - guess);
+    tries ++;
 
-        // append the user's guess to their game history <span>
-        history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
-    } //end else
+    // check whether the user guessed correctly or how close their guess was. Perform hot/cold logic accordingly
+    switch (true){
+        case (distance === 0):
+            const lastWord = (tries ===1) ? "try" : "tries";
+            message = `Fire! You guessed it in ${tries} ${lastWord}`;
+            color = "green";
+            updateBestScore();
+            break;
+        case (distance <= 5):
+            message = "Hot! (Within 5)";
+            color = "red";
+            break;
+        case (distance <= 10):
+            message = "Warmer. (within 10)";
+            color = "orangered";
+            break;
+        case (distance <= 20):
+            message = "Warm. (within 20)";
+            color = "orange";
+            break;
+        case (distance <= 30):
+            message = "Cold. (within 30)";
+            color = "lightblue";
+            break;
+        case (distance <= 40):
+            message = "Colder. (within 40)";
+            color = "blue";
+            break;
+        case (distance > 40):
+            message = "FREEZING. (Way off)";
+            color = "darkblue";
+            break;
+        default:
+            message = "An unknown error occurred.";
+    }//end switch
 
-    // after processing: set the label color, reset the input field to empty, shift cursor focus, and display message
-    messageLabel.style.color = color;
-    guessInput.value = "";
-    guessInput.focus();
-    document.querySelector("#message").textContent = message;
+    // append the user's guess to their game history
+    history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
+
+    // after processing the user's guess, render the final resulting screen
+    render();
 };
 
 /**********************************************************************************************************************

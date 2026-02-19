@@ -33,53 +33,55 @@ const guessClick = () => {
     let message = "";
     if (isNaN(guess)) {
         message = "Not a valid number. Please enter a valid number."
-        return;
-    } else if (guess < 1 || guess > 10) {
+        color = "black";
+    } else if (guess < 1 || guess > 100) {
         message = "Invalid number. Enter a number between 1 and 10.";
-        return;
+        color = "black";
+    }
+    else{
+        // determine the user's distance from the random number
+        const distance = Math.abs(randomNum - guess);
+        tries ++;
+
+        // check whether the user guessed right or hold close their guess was. Perform logic accordingly
+        switch (true){
+            case (distance === 0):
+                const lastWord = (tries ===1) ? "try" : "tries";
+                message = `Fire! You guessed it in ${tries} ${lastWord}`;
+                color = "green";
+                updateBestScore();
+                break;
+            case (distance <= 5):
+                message = "Hot! (Within 5)";
+                color = "red";
+                break;
+            case (distance <= 10):
+                message = "Warmer. (within 10)";
+                color = "orangered";
+                break;
+            case (distance <= 20):
+                message = "Warm. (within 20)";
+                color = "orange";
+                break;
+            case (distance <= 30):
+                message = "Cold. (within 30)";
+                color = "lightblue";
+                break;
+            case (distance <= 40):
+                message = "Colder. (within 40)";
+                color = "blue";
+                break;
+            case (distance > 40):
+                message = "FREEZING. (Way off)";
+                color = "darkblue";
+                break;
+        }
+        history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
     }
 
-    // determine the user's distance from the random number
-    const distance = Math.abs(randomNum - guess);
-    tries ++;
-
-    // check whether the user guessed right or hold close their guess was. Perform logic accordingly
-    switch (true){
-        case (distance === 0):
-            const lastWord = (tries ===1) ? "try" : "tries";
-            message = `Fire! You guessed it in ${tries} ${lastWord}`;
-            color = "green";
-            updateBestScore();
-            break;
-        case (distance <= 5):
-            message = "Hot! (Within 5)";
-            color = "red";
-            break;
-        case (distance <= 10):
-            message = "Warmer. (within 10)";
-            color = "orangered";
-            break;
-        case (distance <= 20):
-            message = "Warm. (within 20)";
-            color = "orange";
-            break;
-        case (distance <= 30):
-            message = "Cold. (within 30)";
-            color = "lightblue";
-            break;
-        case (distance <= 40):
-            message = "Colder. (within 40)";
-            color = "blue";
-            break;
-        case (distance > 40):
-            message = "FREEZING. (Way off)";
-            color = "darkblue";
-            break;
-    }
     messageLabel.style.color = color;
-    history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
+    guessInput.value = "";
     guessInput.focus();
-
     document.querySelector("#message").textContent = message;
 };
 
@@ -98,4 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "click", guessClick);
     document.querySelector("#play_again").addEventListener(
         "click", playAgainClick);
+
+    // add an event listener that listens for when "enter" in pressed on keyboard to trigger the "Guess" button
+    document.querySelector("#number").addEventListener("keydown", (event) => {
+        if (event.key === "Enter")
+            guessClick();
+    })
 });

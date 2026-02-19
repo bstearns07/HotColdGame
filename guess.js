@@ -1,12 +1,16 @@
 "use strict";
 
 // global variables 
-let randomNum = 0;  // the game's secret random number they have to guess
-let tries = 0;      // how many tries the user took to guess the random number
-let bestScore = 100;  // the least amount of tries the user took to guess correctly in their playthrough
-let color = ""       // the color the output text should be
+let randomNum = 0;         // the game's secret random number they have to guess
+let tries = 0;             // how many tries the user took to guess the random number
+let bestScore = Infinity;  // the least amount of tries the user took to guess correctly in their playthrough
+let color = ""              // the color the output text should be
 
-// updateBestScore() function
+/**********************************************************************************************************************
+* Updates the best score if the number of tries it took to guess correctly is less than the current best score
+*
+* @returns {void}
+**********************************************************************************************************************/
 const updateBestScore = () => {
     let bestScoreSpan = document.querySelector("#best_score");
     if (tries < bestScore) {
@@ -15,27 +19,43 @@ const updateBestScore = () => {
     }
 }
 
-// helper function
+/**********************************************************************************************************************
+ * Generates a random integer number up to a given maximum number
+ *
+ * If no maximum number is supplied as an argument, set the maximum to 100 by default
+ *
+ * @param max the maximum number the function should generate
+ *
+ * @returns {Number}
+ **********************************************************************************************************************/
 const getRandomInt = (max = 100) => {
     let num = Math.random() * max;  // get a random number between 0 and max
     num = Math.ceil(num);           // round up to nearest integer
-    console.log(`Random Number : ${num}`);
+    console.log(`Random Number : ${num}`); // log to console to allow for easy debugging
     return num;
 };
 
-// event handler functions
+/**********************************************************************************************************************
+ * Handles the logic to perform when the "Guess" button in clicked
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const guessClick = () => {
-    const guess = parseInt(document.querySelector("#number").value);
-    const guessInput = document.querySelector("#number");
-    let messageLabel = document.querySelector("#message");
-    let history = document.querySelector("#history");
+    const guess = parseInt(document.querySelector("#number").value);// guess entered by user
+    const guessInput = document.querySelector("#number");           // the user <input> element
+    let messageLabel = document.querySelector("#message");          // the output message <label>
+    let history = document.querySelector("#history");               // the history <span> element
+    let message = "";                                                         // final output msg 4 user guess
 
-    let message = "";
+    /*
+     * validate that the user entered a valid number that's in the appropriate value range
+     * if invalid, set the output message appropriately and the output message color to black
+     */
     if (isNaN(guess)) {
         message = "Not a valid number. Please enter a valid number."
         color = "black";
     } else if (guess < 1 || guess > 100) {
-        message = "Invalid number. Enter a number between 1 and 10.";
+        message = "Invalid number. Enter a number between 1 and 100.";
         color = "black";
     }
     else{
@@ -75,16 +95,26 @@ const guessClick = () => {
                 message = "FREEZING. (Way off)";
                 color = "darkblue";
                 break;
-        }
-        history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
-    }
+            default:
+                message = "An unknown error occurred.";
+        }//end switch
 
+        // append the user's guess to their game history <span>
+        history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
+    } //end else
+
+    // after processing: set the label color, reset the input field to empty, shift cursor focus, and display message
     messageLabel.style.color = color;
     guessInput.value = "";
     guessInput.focus();
     document.querySelector("#message").textContent = message;
 };
 
+/**********************************************************************************************************************
+ * Handles the logic to perform when the "Play Again" button is clicked
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const playAgainClick = () => {
     randomNum = getRandomInt(100);
     tries = 0;
@@ -93,9 +123,11 @@ const playAgainClick = () => {
     document.querySelector("#history").innerHTML = "";
 };
 
+// add event listeners when the DOM is fully loaded for the "Guess" button, "Play Again" button, and "Enter" key press
 document.addEventListener("DOMContentLoaded", () => {
     playAgainClick(); // initial a new game
 
+    // tie button click events to appropriate functions
     document.querySelector("#guess").addEventListener(
         "click", guessClick);
     document.querySelector("#play_again").addEventListener(

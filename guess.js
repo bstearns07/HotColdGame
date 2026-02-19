@@ -3,8 +3,17 @@
 // global variables 
 let randomNum = 0;  // the game's secret random number they have to guess
 let tries = 0;      // how many tries the user took to guess the random number
-let bestScore = 0;  // the least amount of tries the user took to guess correctly in their playthrough
+let bestScore = 100;  // the least amount of tries the user took to guess correctly in their playthrough
 let color = ""       // the color the output text should be
+
+// updateBestScore() function
+const updateBestScore = () => {
+    let bestScoreSpan = document.querySelector("#best_score");
+    if (tries < bestScore) {
+        bestScore = tries;
+        bestScoreSpan.textContent = `Best Score: ${bestScore}`;
+    }
+}
 
 // helper function
 const getRandomInt = (max = 100) => {
@@ -19,16 +28,20 @@ const guessClick = () => {
     const guess = parseInt(document.querySelector("#number").value);
     const guessInput = document.querySelector("#number");
     let messageLabel = document.querySelector("#message");
+    let history = document.querySelector("#history");
 
     let message = "";
     if (isNaN(guess)) {
         message = "Not a valid number. Please enter a valid number."
+        return;
     } else if (guess < 1 || guess > 10) {
         message = "Invalid number. Enter a number between 1 and 10.";
+        return;
     }
 
     // determine the user's distance from the random number
     const distance = Math.abs(randomNum - guess);
+    tries ++;
 
     // check whether the user guessed right or hold close their guess was. Perform logic accordingly
     switch (true){
@@ -36,6 +49,7 @@ const guessClick = () => {
             const lastWord = (tries ===1) ? "try" : "tries";
             message = `Fire! You guessed it in ${tries} ${lastWord}`;
             color = "green";
+            updateBestScore();
             break;
         case (distance <= 5):
             message = "Hot! (Within 5)";
@@ -63,20 +77,9 @@ const guessClick = () => {
             break;
     }
     messageLabel.style.color = color;
+    history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
     guessInput.focus();
 
-    //
-    // else if (guess < randomNum) {
-    //     message = "Too small. Try again.";
-    //     tries++;
-    // } else if (guess > randomNum) {
-    //     message = "Too big. Try again.";
-    //     tries++;
-    // } else if (guess === randomNum) {
-    //     tries++;
-    //     const lastWord = (tries === 1) ? "try" : "tries";
-    //     message = `You guessed it in ${tries} ${lastWord}!`;
-    // }
     document.querySelector("#message").textContent = message;
 };
 
@@ -85,6 +88,7 @@ const playAgainClick = () => {
     tries = 0;
     document.querySelector("#number").value = "";
     document.querySelector("#message").textContent = "";
+    document.querySelector("#history").innerHTML = "";
 };
 
 document.addEventListener("DOMContentLoaded", () => {

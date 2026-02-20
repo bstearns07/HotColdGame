@@ -5,7 +5,9 @@
 - [How Does it Work](#how-does-it-work)
 - [Topics Covered](#topics-covered)
 - [Screenshots](#screenshots)
-    - [Add Card](#add-card)
+    - [Intro](#intro)
+    - [Valid Entry](#valid-entry)
+    - [Invalid Entry](#invalid-entry)
 
 ## Author
 [@bstearns07](https://github.com/bstearns07) Ben Stearns
@@ -21,7 +23,7 @@ Try and guess the secret random number the game generates. This little game will
 Simply open index.html to begin.<br>
 <br>
 Instructions:
-- Type if your guess
+- Enter your guess
 - Click "Guess" or press "Enter"
 - Press "Play Again" to start a new game with a new random number
 
@@ -31,9 +33,14 @@ Instructions:
 - switch(true) statements
 - "keydown" event listeners and element.focus() for improved user experience
 - Enabling/disabling buttons
+- Tailwind responsive design and animations
 
 ## Screenshots
 
-### 
+### Intro
+
+### Valid Entry
+
+### Invalid Entry
 
 [Back to Top](#hot-or-cold-game)

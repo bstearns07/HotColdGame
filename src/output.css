@@ -1,3 +1,20 @@
+/**********************************************************************************************************************
+ * Program............: Hot and Cold Game
+ * Programmers........: Ben Stearns
+ * Date...............: 2-21-26
+ * GitHub Repo........: https://github.com/bstearns07/HotColdGame
+ * Description........: A number-guessing JavaScript web application. Features include:
+ *                          - Random number generation for the secret number to guess
+ *                          - Data Validation for numeric entries
+ *                          - Custom functions and event listeners for button clicks
+ *                          - DOM manipulation
+ *                          - Play Again, Best Score, Game Output, and Game History feature
+ *                          * Tailwind styling and responsive design
+ *                          * Buttons that will enable/disable as appropriate
+ *                          * Allows the user to update their maximum range of numbers to generate
+ * File Description...: defines the final css generate by Tailwind and linked to index.html
+ **********************************************************************************************************************/
+
 /*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
@@ -15,6 +32,7 @@
     --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-300: oklch(87.2% 0.01 258.338);
+    --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-black: #000;
     --color-white: #fff;
@@ -199,33 +217,11 @@
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
-  .mt-5 {
-    margin-top: calc(var(--spacing) * 5);
-  }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-  .mb-2 {
-    margin-bottom: calc(var(--spacing) * 2);
-  }
   .block {
     display: block;
   }
-  .table {
-    display: table;
-  }
   .w-full {
     width: 100%;
-  }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .resize {
-    resize: both;
-  }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
   }
   .text-center {
     text-align: center;
@@ -233,13 +229,6 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-  }
-  .underline {
-    text-decoration-line: underline;
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .sm\:col-span-2 {
     @media (width >= 40rem) {
@@ -249,11 +238,6 @@
   .sm\:col-span-6 {
     @media (width >= 40rem) {
       grid-column: span 6 / span 6;
-    }
-  }
-  .sm\:col-span-7 {
-    @media (width >= 40rem) {
-      grid-column: span 7 / span 7;
     }
   }
   .sm\:col-span-12 {
@@ -268,7 +252,11 @@
     background-color: var(--color-gray-100);
     padding: calc(var(--spacing) * 4);
   }
+}
+@layer components {
   .h1 {
+    --tw-translate-y: calc(var(--spacing) * 6);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
     --tw-gradient-position: to right;
     @supports (background-image: linear-gradient(in lab, red, red)) {
       --tw-gradient-position: to right in oklab;
@@ -278,7 +266,7 @@
     --tw-gradient-to: var(--color-blue-600);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
     background-clip: text;
-    padding-bottom: calc(var(--spacing) * 1);
+    padding-bottom: calc(var(--spacing) * 5);
     text-align: center;
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
@@ -289,13 +277,24 @@
     --tw-tracking: var(--tracking-tight);
     letter-spacing: var(--tracking-tight);
     color: transparent;
+    opacity: 0%;
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+    &:hover {
+      @media (hover: hover) {
+        --tw-drop-shadow-size: drop-shadow(0 0 12px var(--tw-drop-shadow-color, rgba(59,130,246,0.6)));
+        --tw-drop-shadow: var(--tw-drop-shadow-size);
+        filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+      }
+    }
     @media (width >= 40rem) {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
     }
   }
-}
-@layer components {
   .game-container {
     margin-inline: auto;
     max-width: calc(var(--spacing) * 175);
@@ -320,7 +319,7 @@
   }
   .row {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
     gap: calc(var(--spacing) * 2);
     @media (width >= 40rem) {
@@ -328,7 +327,7 @@
     }
   }
   #number {
-    width: 100%;
+    grid-column: span 3 / span 3;
     border-radius: 0.25rem;
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -358,12 +357,10 @@
       --tw-outline-style: none;
       outline-style: none;
     }
-    @media (width >= 40rem) {
-      grid-column: span 4 / span 4;
-    }
   }
   .button {
-    cursor: pointer;
+    grid-column: span 1 / span 1;
+    max-width: calc(var(--spacing) * 50);
     border-radius: 0.25rem;
     background-color: var(--color-blue-600);
     padding-inline: calc(var(--spacing) * 4);
@@ -392,8 +389,31 @@
     &:active {
       background-color: var(--color-blue-800);
     }
+    &:disabled {
+      cursor: not-allowed;
+    }
+    &:disabled {
+      background-color: var(--color-gray-400);
+    }
+    &:disabled {
+      &:hover {
+        @media (hover: hover) {
+          --tw-scale-x: 100%;
+          --tw-scale-y: 100%;
+          --tw-scale-z: 100%;
+          scale: var(--tw-scale-x) var(--tw-scale-y);
+        }
+      }
+    }
+    &:disabled {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-gray-400);
+        }
+      }
+    }
     @media (width >= 40rem) {
-      grid-column: span 2 / span 2;
+      grid-column: span 3 / span 3;
     }
   }
   .output {
@@ -412,19 +432,35 @@
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
 }
-@property --tw-border-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
+@layer utilities {
+  @keyframes title-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-title-in {
+    animation: title-in 0.8s ease-out forwards;
+  }
 }
 @property --tw-font-weight {
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
+@property --tw-translate-x {
   syntax: "*";
   inherits: false;
-  initial-value: solid;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
 }
 @property --tw-gradient-position {
   syntax: "*";
@@ -473,6 +509,63 @@
   inherits: false;
 }
 @property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
   syntax: "*";
   inherits: false;
 }
@@ -541,9 +634,10 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-duration {
+@property --tw-border-style {
   syntax: "*";
   inherits: false;
+  initial-value: solid;
 }
 @property --tw-ease {
   syntax: "*";
@@ -567,9 +661,10 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
-      --tw-border-style: solid;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
       --tw-gradient-position: initial;
       --tw-gradient-from: #0000;
       --tw-gradient-via: #0000;
@@ -581,6 +676,20 @@
       --tw-gradient-to-position: 100%;
       --tw-leading: initial;
       --tw-tracking: initial;
+      --tw-duration: initial;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
       --tw-shadow: 0 0 #0000;
       --tw-shadow-color: initial;
       --tw-shadow-alpha: 100%;
@@ -595,7 +704,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-duration: initial;
+      --tw-border-style: solid;
       --tw-ease: initial;
       --tw-scale-x: 1;
       --tw-scale-y: 1;

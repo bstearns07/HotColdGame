@@ -1,5 +1,24 @@
+<!--
+/**********************************************************************************************************************
+ * Program............: Hot and Cold Game
+ * Programmers........: Ben Stearns
+ * Date...............: 2-21-26
+ * GitHub Repo........: https://github.com/bstearns07/HotColdGame
+ * Description........: A number-guessing JavaScript web application. Features include:
+ *                          - Random number generation for the secret number to guess
+ *                          - Data Validation for numeric entries
+ *                          - Custom functions and event listeners for button clicks
+ *                          - DOM manipulation
+ *                          - Play Again, Best Score, Game Output, and Game History feature
+ *                          * Tailwind styling and responsive design
+ *                          * Buttons that will enable/disable as appropriate
+ *                          * Allows the user to update their maximum range of numbers to generate
+ * File Description...: defines the interface of the application
+ **********************************************************************************************************************/
+-->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,12 +28,12 @@
 
     <body class="body">
         <div class="game-container">
-            <h1 class="h1">Guess the Number</h1>
+            <h1 class="h1 animate-title-in">Guess the Number</h1>
 
             <!-- Header Row -->
             <div class="row">
                 <div class="sm:col-span-12 text-center">
-                    <p>It's between 1 and 100.</p>
+                    <p id="range">It's between 1 and 100.</p>
                     <p>Best Score: <span id="best_score">--</span></p>
                 </div>
             </div>
@@ -22,14 +41,9 @@
             <!-- User Input and Buttons Row -->
             <div class="row mt-4">
                 <input type="text" id="number" placeholder="Enter 1-100">
-
-                <button class="button" id="guess">
-                    Guess
-                </button>
-
-                <button class="button" id="play_again">
-                    Play Again
-                </button>
+                <button class="button" id="guess">Guess</button>
+                <button class="button" id="play_again">Play Again</button>
+                <button class="button" id="update-max">Update Max</button>
             </div>
 
             <!-- Message Output -->

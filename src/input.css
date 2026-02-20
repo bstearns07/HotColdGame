@@ -1,16 +1,34 @@
-﻿@import "tailwindcss";
+﻿/**********************************************************************************************************************
+ * Program............: Hot and Cold Game
+ * Programmers........: Ben Stearns
+ * Date...............: 2-21-26
+ * GitHub Repo........: https://github.com/bstearns07/HotColdGame
+ * Description........: A number-guessing JavaScript web application. Features include:
+ *                          - Random number generation for the secret number to guess
+ *                          - Data Validation for numeric entries
+ *                          - Custom functions and event listeners for button clicks
+ *                          - DOM manipulation
+ *                          - Play Again, Best Score, Game Output, and Game History feature
+ *                          * Tailwind styling and responsive design
+ *                          * Buttons that will enable/disable as appropriate
+ *                          * Allows the user to update their maximum range of numbers to generate
+ * File Description...: defines where tailwind gets its resources and class css information
+ **********************************************************************************************************************/
+@import "tailwindcss";
 
 @layer base {
     .body {
         @apply min-h-screen bg-gray-100 p-4;
     }
+}
+@layer components {
     .h1 {
         @apply text-4xl sm:text-5xl font-extrabold tracking-tight
         bg-linear-to-r from-cyan-500 to-blue-600
-        bg-clip-text text-transparent text-center leading-tight pb-1;
+        bg-clip-text text-transparent text-center leading-tight pb-5
+        opacity-0 translate-y-6
+        transition duration-300 hover:drop-shadow-[0_0_12px_rgba(59,130,246,0.6)];
     }
-}
-@layer components {
     .game-container {
         @apply mx-auto max-w-175 rounded-2xl p-1
         bg-white shadow-lg ring-1 ring-black/5
@@ -18,21 +36,42 @@
         hover:shadow-xl;
     }
     .row{
-        @apply grid grid-cols-1 sm:grid-cols-12 gap-2 items-center;
+        @apply grid grid-cols-3 sm:grid-cols-12 gap-2 items-center;
     }
     #number{
-        @apply sm:col-span-4 w-full border border-gray-300 rounded px-3 py-2 bg-white
+        @apply col-span-3 border border-gray-300 rounded px-3 py-2 bg-white
         hover:ring-2 hover:ring-cyan-300 focus:outline-none focus:ring-2 focus:ring-blue-400;
     }
-    .button{
-        @apply sm:col-span-2 bg-blue-600 text-white px-4 py-2 rounded transition-transform duration-200 ease-out hover:scale-105
-        hover:bg-blue-700 active:bg-blue-800 cursor-pointer;
+    .button {
+        @apply col-span-1 sm:col-span-3
+        max-w-50
+        bg-blue-600 text-white px-4 py-2 rounded
+        transition-transform duration-200 ease-out
+        hover:scale-105 hover:bg-blue-700
+        active:bg-blue-800
+        disabled:bg-gray-400
+        disabled:cursor-not-allowed
+        disabled:hover:scale-100
+        disabled:hover:bg-gray-400;
     }
     .output {
         @apply whitespace-pre-wrap mt-5 rounded-lg
         border border-gray-300 bg-white
         p-4 text-sm text-gray-800
         shadow-inner;
+    }
+}
+
+@layer utilities {
+    @keyframes title-in {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-title-in {
+        animation: title-in 0.8s ease-out forwards;
     }
 }
 

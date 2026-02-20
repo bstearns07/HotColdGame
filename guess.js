@@ -134,7 +134,7 @@ const playAgainClick = () => {
     randomNum = getRandomInt(100);
     tries = 0;
     document.querySelector("#number").value = "";
-    document.querySelector("#message").textContent = "";
+    document.querySelector("#message").textContent = "--";
     document.querySelector("#history").innerHTML = "";
     document.querySelector("#guess").disabled = false; //re-enable the guess button
 };

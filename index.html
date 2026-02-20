@@ -1,40 +1,50 @@
-<!--
-/**********************************************************************************************************************
- * Program............: Hot/Cold Game
- * Programmers........: Ben Stearns
- * Date...............: 2-19-26
- * GitHub Repo........: https://github.com/bstearns07/HotColdGame
- * Description........: A number-guessing game that tells you whether you're hot or cold
- *                      Features include:
- *                          - Data Validation to allow numeric inputs only
- *                          - Allows the use of the "Enter" key for guess submission
- * File Description...: defines the interface of the application
- **********************************************************************************************************************/
--->
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Guess the Number</title>
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="src/output.css">
     </head>
-    <body>
-        <h1>Guess the Number</h1>
-        <p>It's between 1 and 100.</p>
 
-        <p>Best Score: <span id="best_score">--</span></p>
+    <body class="body">
+        <div class="game-container">
+            <h1 class="h1">Guess the Number</h1>
 
-        <input type="text" id="number" placeholder="Enter 1-100">
-        <button id="guess">Guess</button>
-        <button id="play_again">Play again</button><br>
-        
-        <label id="message"></label>
+            <!-- Header Row -->
+            <div class="row">
+                <div class="sm:col-span-12 text-center">
+                    <p>It's between 1 and 100.</p>
+                    <p>Best Score: <span id="best_score">--</span></p>
+                </div>
+            </div>
 
-        <h3>Guess History:</h3>
-        <span id="history"></span>
+            <!-- User Input and Buttons Row -->
+            <div class="row mt-4">
+                <input type="text" id="number" placeholder="Enter 1-100">
 
+                <button class="button" id="guess">
+                    Guess
+                </button>
+
+                <button class="button" id="play_again">
+                    Play Again
+                </button>
+            </div>
+
+            <!-- Message Output -->
+            <div class="row mt-3">
+                <h3 class="col-span-1 sm:col-span-2 font-semibold">Game Says:</h3>
+                <label class="output col-span-1 sm:col-span-6 w-full block" id="message">--</label>
+            </div>
+
+            <!-- History -->
+            <div class="row mt-3">
+                <h3 class="col-span-1 sm:col-span-2 font-semibold">Guess History:</h3>
+                <span class="output col-span-1 sm:col-span-6 w-full block" id="history"></span>
+            </div>
+
+        </div>
         <script src="guess.js"></script>
     </body>
 </html>

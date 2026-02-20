@@ -1,0 +1,38 @@
+﻿@import "tailwindcss";
+
+@layer base {
+    .body {
+        @apply min-h-screen bg-gray-100 p-4;
+    }
+    .h1 {
+        @apply text-4xl sm:text-5xl font-extrabold tracking-tight
+        bg-linear-to-r from-cyan-500 to-blue-600
+        bg-clip-text text-transparent text-center leading-tight pb-1;
+    }
+}
+@layer components {
+    .game-container {
+        @apply mx-auto max-w-175 rounded-2xl p-1
+        bg-white shadow-lg ring-1 ring-black/5
+        transition-all duration-200
+        hover:shadow-xl;
+    }
+    .row{
+        @apply grid grid-cols-1 sm:grid-cols-12 gap-2 items-center;
+    }
+    #number{
+        @apply sm:col-span-4 w-full border border-gray-300 rounded px-3 py-2 bg-white
+        hover:ring-2 hover:ring-cyan-300 focus:outline-none focus:ring-2 focus:ring-blue-400;
+    }
+    .button{
+        @apply sm:col-span-2 bg-blue-600 text-white px-4 py-2 rounded transition-transform duration-200 ease-out hover:scale-105
+        hover:bg-blue-700 active:bg-blue-800 cursor-pointer;
+    }
+    .output {
+        @apply whitespace-pre-wrap mt-5 rounded-lg
+        border border-gray-300 bg-white
+        p-4 text-sm text-gray-800
+        shadow-inner;
+    }
+}
+

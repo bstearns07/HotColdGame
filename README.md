@@ -1,16 +1,18 @@
 # Hot or Cold Game
+![hot-or-cold-game](assets/intro.png)
+
+## Author
+[@bstearns07](https://github.com/bstearns07) Ben Stearns
+
 <b>Table of Contents</b>
 - [Author](#Author)
 - [Summary](#summary)
 - [How Does it Work](#how-does-it-work)
+- [Features](#features)
 - [Topics Covered](#topics-covered)
 - [Screenshots](#screenshots)
-    - [Intro](#intro)
     - [Valid Entry](#valid-entry)
     - [Invalid Entry](#invalid-entry)
-
-## Author
-[@bstearns07](https://github.com/bstearns07) Ben Stearns
 
 ## Summary
 ### Welcome to the Hot or Cold Game
@@ -25,9 +27,21 @@ Simply open index.html to begin.<br>
 Instructions:
 - Enter your guess
 - Click "Guess" or press "Enter"
-- Press "Play Again" to start a new game with a new random number
+- Click "Play Again" to start a new game with a new random number
+- Click "Update Max" to adjust the maximum number the game should generate
+
+## Features
+Features of this game include:
+- Random number generation
+- Play Again and Update Maximum number buttons
+- Game output textbox
+- Game History textbox
+- Tracks your best score
+- Numeric Data Validation
+- Tailwind CSS and responsive design
 
 ## Topics Covered
+- DOM manipulation
 - Defining functions
 - Adding event listeners
 - switch(true) statements
@@ -37,10 +51,12 @@ Instructions:
 
 ## Screenshots
 
-### Intro
-
 ### Valid Entry
+![Valid Entry](assets/valid.png)
+![Valid Entry](assets/valid2.png)
 
 ### Invalid Entry
+![Valid Entry](assets/invalid.png)
+![Valid Entry](assets/invalid2.png)
 
 [Back to Top](#hot-or-cold-game)

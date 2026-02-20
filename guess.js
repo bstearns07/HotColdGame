@@ -6,7 +6,7 @@ let tries = 0;             // how many tries the user took to guess the random n
 let bestScore = Infinity;  // the least amount of tries the user took to guess correctly in their playthrough
 
 /**********************************************************************************************************************
-* Updates the best score if the number of tries it took to guess correctly is less than the current best score
+* Updates the user's best score if the tries it took to guess correctly is less than the current best score
 *
 * @returns {void}
 **********************************************************************************************************************/
@@ -19,7 +19,7 @@ const updateBestScore = () => {
 }
 
 /**********************************************************************************************************************
- * Generates a random integer number up to a given maximum number
+ * Generates a random whole number up to a given maximum number
  *
  * If no maximum number is supplied as an argument, set the maximum to 100 by default
  *
@@ -40,19 +40,20 @@ const getRandomInt = (max = 100) => {
  * @returns {void}
  **********************************************************************************************************************/
 const guessClick = () => {
-    const guess = parseInt(document.querySelector("#number").value);// guess entered by user
+    const guess = parseInt(document.querySelector("#number").value);// the guess entered by user
     const guessInput = document.querySelector("#number");           // the user <input> element
     const messageLabel = document.querySelector("#message");        // the output message <label>
     const history = document.querySelector("#history");             // the history <span> element
     let message = "";                                                         // final output msg for user guess
-    let color = "black";                                                      // the color of the output text
+    let color = "black";                                                      // the color the output text should be
 
     /*******************************************************************************************************************
-     * Helper function that updates the interface when the Guess() button is clicked
+     * Helper function that renders the interface when the Guess() button is clicked
      *
      * @returns {void}
      ******************************************************************************************************************/
     const render = () => {
+        // display the final output message, set the msg color, reset the user input field, and shift cursor focus back
         messageLabel.textContent = message;
         messageLabel.style.color = color;
         guessInput.value = "";

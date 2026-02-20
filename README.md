@@ -4,7 +4,7 @@
 ## Author
 [@bstearns07](https://github.com/bstearns07) Ben Stearns
 
-<b>Table of Contents</b>
+## Table of Contents
 - [Author](#Author)
 - [Summary](#summary)
 - [How Does it Work](#how-does-it-work)

@@ -30,6 +30,7 @@ Instructions:
 - Adding event listeners
 - switch(true) statements
 - "keydown" event listeners and element.focus() for improved user experience
+- Enabling/disabling buttons
 
 ## Screenshots
 

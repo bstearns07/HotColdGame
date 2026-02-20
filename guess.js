@@ -6,15 +6,14 @@ let tries = 0;             // how many tries the user took to guess the random n
 let bestScore = Infinity;  // the least amount of tries the user took to guess correctly in their playthrough
 
 /**********************************************************************************************************************
-* Updates the user's best score if the tries it took to guess correctly is less than the current best score
+* Updates the user's best score on display if (tries before guessing correctly) < (current best score)
 *
 * @returns {void}
 **********************************************************************************************************************/
 const updateBestScore = () => {
-    let bestScoreSpan = document.querySelector("#best_score");
     if (tries < bestScore) {
         bestScore = tries;
-        bestScoreSpan.textContent = `Best Score: ${bestScore}`;
+        document.querySelector("#best_score").textContent = `Best Score: ${bestScore}`;
     }
 }
 
@@ -35,11 +34,12 @@ const getRandomInt = (max = 100) => {
 };
 
 /**********************************************************************************************************************
- * Handles the logic to perform when the "Guess" button in clicked
+ * Handles the logic to perform when the "Guess" button is clicked
  *
  * @returns {void}
  **********************************************************************************************************************/
 const guessClick = () => {
+    // function variables
     const guess = parseInt(document.querySelector("#number").value);// the guess entered by user
     const guessInput = document.querySelector("#number");           // the user <input> element
     const messageLabel = document.querySelector("#message");        // the output message <label>
@@ -76,13 +76,17 @@ const guessClick = () => {
     const distance = Math.abs(randomNum - guess);
     tries ++;
 
-    // check whether the user guessed correctly or how close their guess was. Perform hot/cold logic accordingly
+    /*
+    * check whether the user guessed correctly or how close their guess was. Perform hot/cold logic accordingly by
+    * building an appropriate response message, setting output text color, and updating best score as needed
+    */
     switch (true){
         case (distance === 0):
             const lastWord = (tries ===1) ? "try" : "tries";
             message = `Fire! You guessed it in ${tries} ${lastWord}`;
             color = "green";
             updateBestScore();
+            document.querySelector("#guess").disabled = true;//disable Guess button until Play Again is clicked
             break;
         case (distance <= 5):
             message = "Hot! (Within 5)";
@@ -115,12 +119,14 @@ const guessClick = () => {
     // append the user's guess to their game history
     history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
 
-    // after processing the user's guess, render the final resulting screen
+    // render the final resulting screen
     render();
 };
 
 /**********************************************************************************************************************
  * Handles the logic to perform when the "Play Again" button is clicked
+ *
+ * Resets try attempts to 0, clears interface, and re-enables the "Guess" button
  *
  * @returns {void}
  **********************************************************************************************************************/
@@ -130,9 +136,12 @@ const playAgainClick = () => {
     document.querySelector("#number").value = "";
     document.querySelector("#message").textContent = "";
     document.querySelector("#history").innerHTML = "";
+    document.querySelector("#guess").disabled = false; //re-enable the guess button
 };
 
-// add event listeners when the DOM is fully loaded for the "Guess" button, "Play Again" button, and "Enter" key press
+/**********************************************************************************************************************
+ * DOMContentLoaded() event listeners
+ **********************************************************************************************************************/
 document.addEventListener("DOMContentLoaded", () => {
     playAgainClick(); // initial a new game
 
@@ -142,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#play_again").addEventListener(
         "click", playAgainClick);
 
-    // add an event listener that listens for when "enter" in pressed on keyboard to trigger the "Guess" button
+    // add an event listener that listens for when "enter" in pressed on the keyboard to trigger the "Guess" button
     document.querySelector("#number").addEventListener("keydown", (event) => {
         if (event.key === "Enter")
             guessClick();

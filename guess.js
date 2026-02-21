@@ -24,13 +24,14 @@ let bestScore = Infinity;  // the least amount of tries the user took to guess c
 let max = 100;             // the maximum number the game should generate
 
 // cache DOM elements
-const numberInput = document.querySelector("#number");
-const messageLabel = document.querySelector("#message");
+const guessInputEl = document.querySelector("#number");
+const messageLabelEl = document.querySelector("#message");
 const historyEl = document.querySelector("#history");
 const guessBtn = document.querySelector("#guess");
 const updateMaxBtn = document.querySelector("#update-max");
 const bestScoreEl = document.querySelector("#best_score");
 const rangeEl = document.querySelector("#range");
+const playAgainBtn = document.querySelector("#play_again");
 
 /**********************************************************************************************************************
 * Updates the user's best score on display if (tries before guessing correctly) < (current best score)
@@ -40,7 +41,7 @@ const rangeEl = document.querySelector("#range");
 const updateBestScore = () => {
     if (tries < bestScore) {
         bestScore = tries;
-        document.querySelector("#best_score").textContent = `${bestScore}`;
+        bestScoreEl.textContent = `${bestScore}`;
     }
 }
 
@@ -50,15 +51,15 @@ const updateBestScore = () => {
  * @returns {void}
  **********************************************************************************************************************/
 const updateMaxNum = () => {
-    const num = parseInt(document.querySelector("#number").value);
-    const messageLabel = document.querySelector("#message");
-    messageLabel.style.color = "black";
+    const num = parseInt(guessInputEl.value); // attempt to parse user's entry
+    messageLabelEl.style.color = "black"; // make sure output text color set to black to prevent carryover colors
 
+    // validate user entry in numeric, set appropriate output message, and start new game if needed
     if (isNaN(num))
-        messageLabel.textContent = "Invalid entry. Please enter a number to update the game's max number.";
+        messageLabelEl.textContent = "Invalid entry. Please enter a number to update the game's max number.";
     else{
-        max = num;
-        playAgainClick("Maximum number successfully updated");
+        max = num; // replace old max number with new one entered by the user
+        playAgainClick("Maximum number successfully updated. Ready to play.");
     }
 }
 
@@ -99,11 +100,6 @@ const getRandomInt = (max = 100) => {
 const guessClick = () => {
     // function variables
     const guess = parseInt(document.querySelector("#number").value);// the guess entered by user
-    const guessInput = document.querySelector("#number");           // the user <input> element
-    const messageLabel = document.querySelector("#message");        // the output message <label>
-    const history = document.querySelector("#history");             // the history <span> element
-    const guessBtn = document.querySelector("#guess");              // guess button element
-    const updateMaxBtn = document.querySelector("#updateMax");      // Update Max button element
     let message = "";                                                         // final output msg for user guess
     let color = "black";                                                      // the color the output text should be
 
@@ -114,10 +110,10 @@ const guessClick = () => {
      ******************************************************************************************************************/
     const render = () => {
         // display the final output message, set the msg color, reset the user input field, and shift cursor focus back
-        messageLabel.textContent = message;
-        messageLabel.style.color = color;
-        guessInput.value = "";
-        guessInput.focus();
+        messageLabelEl.textContent = message;
+        messageLabelEl.style.color = color;
+        guessInputEl.value = "";
+        guessInputEl.focus();
     }
 
     /*
@@ -149,7 +145,7 @@ const guessClick = () => {
             updateBestScore();
             guessBtn.disabled = true; //disable Guess button until Play Again is clicked
             updateMaxBtn.disabled = false; //re-enable Update Max button
-            guessInput.removeEventListener("keydown", handleEnterKey); //disable Enter key until Play Again is clicked
+            guessInputEl.removeEventListener("keydown", handleEnterKey); //disable Enter key until Play Again is clicked
             break;
         case (distance <= 5):
             message = "Hot! (Within 5)";
@@ -180,7 +176,7 @@ const guessClick = () => {
     }//end switch
 
     // append the user's guess to their game history
-    history.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
+    historyEl.innerHTML += `Guess ${tries}: ${guess} - ${message}<br>`;
 
     // render the final resulting screen
     render();
@@ -198,30 +194,28 @@ const guessClick = () => {
 const playAgainClick = (msg = "") => {
     randomNum = getRandomInt(max);
     tries = 0;
-    document.querySelector("#number").value = "";
-    document.querySelector("#message").textContent = msg;
-    document.querySelector("#history").innerHTML = "";
-    document.querySelector("#guess").disabled = false; //re-enable the guess button
-    document.querySelector("#update-max").disabled = false;// diable the Update Max button
-    document.querySelector("#range").textContent = `It's from 1 to ${max}`; // set range <p> text
-    document.querySelector("#number").addEventListener("keydown", handleEnterKey);// re-enable event
+    guessInputEl.value = "";
+    messageLabelEl.textContent = msg;
+    historyEl.innerHTML = "";
+    guessBtn.disabled = false; //re-enable the guess button
+    updateMaxBtn.disabled = false;// diable the Update Max button
+    rangeEl.textContent = `It's from 1 to ${max}`; // set range <p> text
+    guessInputEl.addEventListener("keydown", handleEnterKey);// re-enable event
+    guessInputEl.focus();
 };
 
 /**********************************************************************************************************************
- * DOMContentLoaded() event listeners
+ * DOMContentLoaded() event listeners`
  **********************************************************************************************************************/
 document.addEventListener("DOMContentLoaded", () => {
     playAgainClick(); // start a new game
 
     // tie button click events to appropriate functions
-    document.querySelector("#guess").addEventListener(
-        "click", guessClick);
+    guessBtn.addEventListener("click", guessClick);
     // updated Play Again listener as an anonymous arrow function
     // This ignores the event object normally passed to playAgainClick() so an optional string msg can be passed instead
-    document.querySelector("#play_again").addEventListener(
-        "click", () => playAgainClick());
-    document.querySelector("#update-max").addEventListener(
-        "click", updateMaxNum);
+    playAgainBtn.addEventListener("click", () => playAgainClick());
+    updateMaxBtn.addEventListener("click", updateMaxNum);
     // add an event listener that listens for when "enter" in pressed on the keyboard to trigger the "Guess" button
-    document.querySelector("#number").addEventListener("keydown", handleEnterKey);
+    guessInputEl.addEventListener("keydown", handleEnterKey);
 });

@@ -16,11 +16,14 @@
  **********************************************************************************************************************/
 @import "tailwindcss";
 
+/* Custom Base-Level styling rules */
 @layer base {
     .body {
         @apply min-h-screen bg-gray-100 p-4;
     }
 }
+
+/* Component-Level Rules */
 @layer components {
     .h1 {
         @apply text-4xl sm:text-5xl font-extrabold tracking-tight
@@ -62,6 +65,7 @@
     }
 }
 
+/* Utility-Level Rules */
 @layer utilities {
     @keyframes title-in {
         to {

@@ -173,6 +173,7 @@ const guessClick = () => {
             break;
         default:
             message = "An unknown error occurred.";
+            break;
     }//end switch
 
     // append the user's guess to their game history
@@ -185,7 +186,7 @@ const guessClick = () => {
 /**********************************************************************************************************************
  * Handles the logic performed when the "Play Again" button is clicked
  *
- * Resets try attempts to 0, clears interface, and disables/re-enables buttons as needed
+ * Resets try attempts to 0, resets the interface, disables/re-enables buttons as needed, & re-enables Enter key clicks
  *
  * @param msg An optional message to display in the game's output. Empty string by default
  *

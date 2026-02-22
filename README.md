@@ -63,5 +63,6 @@ Features of this game include:
 ### Invalid Entry
 ![Valid Entry](assets/invalid.png)
 ![Valid Entry](assets/invalid2.png)
+![Valid Entry](assets/invalid3.png)
 
 [Back to Top](#hot-or-cold-game)

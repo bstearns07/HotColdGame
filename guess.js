@@ -54,9 +54,17 @@ const updateMaxNum = () => {
     const num = parseInt(guessInputEl.value); // attempt to parse user's entry
     messageLabelEl.style.color = "black"; // make sure output text color set to black to prevent carryover colors
 
-    // validate user entry in numeric, set appropriate output message, and start new game if needed
-    if (isNaN(num))
+    // validate user entry is numeric, set appropriate output message, start new game if needed, and re-focus cursor
+    if (isNaN(num)){
         messageLabelEl.textContent = "Invalid entry. Please enter a number to update the game's max number.";
+        guessInputEl.value = "";
+        guessInputEl.focus();
+    }
+    else if (num <= 1){
+        messageLabelEl.textContent = "Invalid entry. Enter a number greater than 1 to adjust the game's max number.";
+        guessInputEl.value = "";
+        guessInputEl.focus();
+    }
     else{
         max = num; // replace old max number with new one entered by the user
         playAgainClick("Maximum number successfully updated. Ready to play.");

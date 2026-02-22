@@ -17,8 +17,8 @@
 ## Summary
 ### Welcome to the Hot or Cold Game
 This JavaScript web app is a number guessing game. Try and guess the secret random number the game generates. 
-This little game will let you know if you're so close that you're on fire, or so far off that you're
-freezing cold. Give it a try!<br>
+This little game will let you know if you're so close that you're on fire🔥, or so far off that you're
+freezing cold❄️. Give it a try!<br>
 <br>
 For full program details, please see [Program Requirements](./assets/Assignment_Instructions.pdf)
 
@@ -26,11 +26,14 @@ For full program details, please see [Program Requirements](./assets/Assignment_
 Simply open index.html to begin.<br>
 <br>
 Instructions:
-- Enter your guess
-- Click "Guess" or press "Enter"
-- Click "Play Again" to start a new game with a new random number
-- Enter a number and click "Update Max" to adjust the maximum number 
-  the game should generate (not available in the middle of a game)
+- Type a number in the entry box that's within the range displayed (default is between 1-100)
+- Click "Guess" or press "Enter" to submit your guess
+- The game will tell you if you're hot or cold plus how close you are
+- Keep guessing until you get it right. The game will track your guess history to help
+- Click "Play Again" at any time to start a new game with a new random number
+- If you'd like to make the game easier/harder, just enter a number and click "Update Max". This adjusts the maximum number 
+  the game should generate to what you specified (not available in the middle of a game)
+- Play as long as you like! The game will keep track of your high score
 
 ## Features
 Features of this game include:

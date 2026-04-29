@@ -13,6 +13,7 @@
 ## Table of Contents
 - 📌 [Summary](#-summary)
 - ⭐ [How It Works](#-how-it-works)
+- 🚀 [Live Demo](#-live-demo)
 - ✨ [Features](#-features)
 - 🧰 [Tech Stack](#-tech-stack)
 - 🔧 [Development Tools](#-development-tools)
@@ -41,6 +42,15 @@ Instructions:
 - If you'd like to make the game easier/harder, just enter a number and click "Update Max". This adjusts the maximum number 
   the game should generate to what you specified (not available in the middle of a game)
 - Play as long as you like! The game will keep track of your high score
+
+---
+
+## 🚀 Live Demo
+> ⬇️ **Click the link below to open the app in your browser and try it yourself!**⬇️
+
+👉 [![Open Demo](https://img.shields.io/badge/▶%20Open%20Live%20Demo-ff4b4b?style=for-the-badge)](https://bstearns07.github.io/HotColdGame/)
+
+---
 
 ## ✨ Features
 Features of this game include:
